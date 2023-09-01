@@ -1,6 +1,6 @@
 {
-  "short_name": "Calendar",
-  "name": "Calendar",
+  "short_name": "Sessions",
+  "name": "Sessions",
   "icons": [
     {
       "src": "favicon.ico",
