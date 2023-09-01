@@ -67,7 +67,7 @@ export default function Login() {
       },
     };
     axios
-      .post(`${siteUrl}/data`, sendData, options)
+      .post(`${siteUrl}/data/webinar`, sendData, options)
       .then((result) => {
         window.localStorage.setItem("email", atob(id));
         navigate(`/Event`);
