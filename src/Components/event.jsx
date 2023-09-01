@@ -105,7 +105,7 @@ export default function Event() {
             data.map((data) => (
               <Card
                 sx={{
-                  maxWidth: 345,
+                  width: 345,
                   mx: 2,
                   py: 2,
                   boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
