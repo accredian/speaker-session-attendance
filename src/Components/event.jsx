@@ -16,7 +16,7 @@ import ClientConfig from "./client";
 import Myaccountnav from "./Navbar/myaccountnav";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import EastIcon from '@mui/icons-material/East';
+import EastIcon from "@mui/icons-material/East";
 export default function Event() {
   let navigate = useNavigate();
   const siteUrl = ClientConfig.siteUrl;
@@ -26,39 +26,7 @@ export default function Event() {
   const [event_id, setid] = useState("");
   const [mylink, setMylink] = useState();
   const [status, setStatus] = useState();
-  const fetchData = async () => {
-   
-    await axios({
-  
-      method: "post",
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-      },
-      url: `${siteUrl}/data/fetchcount`,
-      data: {
-        email: localStorage.getItem("email"),
-      },
-    }).then((res) => {
 
-      if (res.data.count == "2") {
-        localStorage.setItem("count", res.data.count);
-
-        navigate(`/Myaccount`);
-        LoaderClose();
-      } else if (res.data.count == "1") {
-        localStorage.setItem("enrol_id", res.data.enrol_id);
-        localStorage.setItem("user_id", res.data.user_id);
-        localStorage.setItem("program_id", res.data.program_id);
-        localStorage.setItem("category", res.data.category);
-        localStorage.setItem("count", res.data.count);
-
-        navigate(`/Calendar`);
-        LoaderClose();
-      }
-     
-    });
-  };
   const LoaderClose = () => {
     setOpen(false);
   };
@@ -77,28 +45,16 @@ export default function Event() {
         "Content-Type": "application/json",
       },
     };
-    axios
-      .post(`${siteUrl}/data`, sendData, options)
-      .then((result) => {
-      
-              if (result.data.status == "404") {
-              
-                navigate(`/Nonevent`);
-                LoaderClose();
-               
-              } 
-         
-       
-        else {
-          console.log(result.data, "erooll");
-          setData(result.data);
-          LoaderClose();
-        }
-
-       
-      })
-
-
+    axios.post(`${siteUrl}/data/webinar`, sendData, options).then((result) => {
+      if (result.data.status == "404") {
+        navigate(`/Nonevent`);
+        LoaderClose();
+      } else {
+        console.log(result.data, "erooll");
+        setData(result.data);
+        LoaderClose();
+      }
+    });
   }, []);
   const options = {
     headers: {
@@ -126,97 +82,108 @@ export default function Event() {
         setMylink(result.data);
       });
   };
-  const sandlink = () => {
-    navigate(`/Myaccount`);
-  };
- 
-    if(data){
+  // const sandlink = () => {
+  //   navigate(`/Myaccount`);
+  // };
 
+  if (data) {
     return (
       <>
-      <Myaccountnav />
-       <Box display="flex" sx=
-       {{float: "right",mr:2}}>
-                   
-                    <Typography
-                      sx={{  mt: 10, mr:1, fontWeight: "bold", fontSize: "1rem",cursor: "pointer",
-                      "&:hover": {
-                        color: "#0047b3",
-                        cursor: "pointer",
-                      },
-                      textShadow:"0 1px 0 #ccc,0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9,0 5px 0 #aaa,0 6px 1px rgba(0,0,0,.1),0 0 5px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.3),0 3px 5px rgba(0,0,0,.2),0 5px 10px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.2),0 20px 20px rgba(0,0,0,.15);",
-                   
+        <Myaccountnav />
+        <Box display="flex" sx={{ float: "right", mr: 2 }}>
+          <Typography
+            sx={{
+              mt: 10,
+              mr: 1,
+              fontWeight: "bold",
+              fontSize: "1rem",
+              cursor: "pointer",
+              "&:hover": {
+                color: "#0047b3",
+                cursor: "pointer",
+              },
+              textShadow:
+                "0 1px 0 #ccc,0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9,0 5px 0 #aaa,0 6px 1px rgba(0,0,0,.1),0 0 5px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.3),0 3px 5px rgba(0,0,0,.2),0 5px 10px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.2),0 20px 20px rgba(0,0,0,.15);",
 
-                      mb:5 }}
-                      onClick={sandlink}
-                    >
-                      {" "}
-                      Go to Calendar
-                    </Typography>
-                    <EastIcon sx={{ fontWeight: "bold",mt:10, textShadow:"0 1px 0 #ccc,0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9,0 5px 0 #aaa,0 6px 1px rgba(0,0,0,.1),0 0 5px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.3),0 3px 5px rgba(0,0,0,.2),0 5px 10px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.2),0 20px 20px rgba(0,0,0,.15);",  "&:hover": {
-                        color: "#0047b3",
-                        cursor: "pointer",
-                      }, }} />
-                  </Box>
+              mb: 5,
+            }}
+            onClick={sandlink}
+          >
+            {" "}
+            Go to Calendar
+          </Typography>
+          <EastIcon
+            sx={{
+              fontWeight: "bold",
+              mt: 10,
+              textShadow:
+                "0 1px 0 #ccc,0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9,0 5px 0 #aaa,0 6px 1px rgba(0,0,0,.1),0 0 5px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.3),0 3px 5px rgba(0,0,0,.2),0 5px 10px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.2),0 20px 20px rgba(0,0,0,.15);",
+              "&:hover": {
+                color: "#0047b3",
+                cursor: "pointer",
+              },
+            }}
+          />
+        </Box>
 
-      <Box
-        sx={{
-          display:{lg:"flex",xs:"block"},
-          justifyContent: "center",
-          alignItems: "center",
-          height:{lg:"100vh",xs:"80vh"} ,
-          pt:{xs:20,lg:1}
-        }}
-      >
-        {data &&
-          data.map((data) => (
-            <Card
-              sx={{
-                maxWidth: 345,
-                mx: 2,
-                py: 2,
-                boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-                mb:5
-              }}
-            >
-              <center>
-                <CardMedia
-                  component="img"
-                  image="../live.png"
-                  alt="green iguana"
-                  sx={{ width: "100px" }}
-                />
-              </center>
-              <CardContent sx={{ textAlign: "center" }}>
-                <Typography gutterBottom variant="h5" component="div">
-                  {data.title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {data.description}
-                </Typography>
-              </CardContent>
+        <Box
+          sx={{
+            display: { lg: "flex", xs: "block" },
+            justifyContent: "center",
+            alignItems: "center",
+            height: { lg: "100vh", xs: "80vh" },
+            pt: { xs: 20, lg: 1 },
+          }}
+        >
+          {data &&
+            data.map((data) => (
+              <Card
+                sx={{
+                  maxWidth: 345,
+                  mx: 2,
+                  py: 2,
+                  boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+                  mb: 5,
+                }}
+              >
+                <center>
+                  <CardMedia
+                    component="img"
+                    image="../live.png"
+                    alt="green iguana"
+                    sx={{ width: "100px" }}
+                  />
+                </center>
+                <CardContent sx={{ textAlign: "center" }}>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {data.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {data.description}
+                  </Typography>
+                </CardContent>
 
-              <center>
-                {" "}
-                <Button
-                  size="small"
-                  color="success"
-                  variant="contained"
-                  onClick={() => handleSubmit(data.user_id, data.event_id)}
-                >
-                  Go to Class
-                </Button>
-              </center>
-            </Card>
-          ))}
-      </Box>
+                <center>
+                  {" "}
+                  <Button
+                    size="small"
+                    color="success"
+                    variant="contained"
+                    onClick={() => handleSubmit(data.user_id, data.event_id)}
+                  >
+                    Go to Class
+                  </Button>
+                </center>
+              </Card>
+            ))}
+        </Box>
       </>
-  );
-            }  else {
-              return (
-                <Box sx={{mt:10,display:"flex",justifyContent:"center"}}>
-                  <CircularProgress />
-                </Box>
-              );
-            }     
+    );
+  } else {
+    return (
+      <Box sx={{ mt: 10, display: "flex", justifyContent: "center" }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 }
